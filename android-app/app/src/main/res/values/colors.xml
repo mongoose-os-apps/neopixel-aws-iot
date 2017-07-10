@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+
+    <color name="white">#FFFFFF</color>
+    <color name="detail_background">#121832</color>
+    <color name="bottom_sheet_background">#0E132A</color>
+
+    <color name="red">#f44336</color>
+    <color name="green">#4CAF50</color>
+    <color name="blue">#2196F3</color>
+    <color name="purple">#23708D</color>
+
+    <color name="gradient_start">#6A2C9E</color>
+    <color name="gradient_center">#336092</color>
+    <color name="gradient_end">#0A8180</color>
+</resources>

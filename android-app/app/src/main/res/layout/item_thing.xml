@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="horizontal"
+              android:paddingBottom="6dp"
+              android:paddingTop="6dp">
+
+    <Button
+        android:id="@+id/btn_thing_image"
+        android:layout_width="52dp"
+        android:layout_height="52dp"
+        android:background="@drawable/circle"
+        android:backgroundTint="@color/colorAccent"
+        android:textColor="@color/white"
+        android:textSize="22sp"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/tv_thing_name"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="12dp"
+        android:gravity="center_vertical"
+        android:text="ESP8266_FDA01"
+        android:textColor="@color/white"
+        android:textStyle="bold"/>
+
+</LinearLayout>

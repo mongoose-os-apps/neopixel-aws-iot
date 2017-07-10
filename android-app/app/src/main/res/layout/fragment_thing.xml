@@ -1,0 +1,20 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="100dp"
+    android:layout_marginLeft="32dp"
+    android:layout_marginRight="32dp"
+    tools:context="com.mgenio.aws.mongooseos.neopixels.fragments.ThingFragment">
+
+    <ImageView
+        android:id="@+id/iv_thing"
+        android:layout_width="62dp"
+        android:layout_height="62dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_margin="12dp"
+        android:src="@drawable/ic_light_bulb"
+        android:tint="@color/white"/>
+
+</RelativeLayout>

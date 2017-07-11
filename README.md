@@ -8,18 +8,12 @@ Android App.
 
 ## Step 1: Import
 
-##### Via MOS UI tool
 - Install and start [mos tool](https://mongoose-os.com/software.html)
-- Switch to the Project page, find and import this app(if available otherwise follow the steps below), build and flash it:
+- Switch to the Project page, find and import this app, build and flash it:
 
 <p align="center">
   <img src="https://mongoose-os.com/images/app1.gif" width="75%">
 </p>
-
-##### If app not available in MOS tool UI
-
-- Clone this repo ```git clone https://github.com/austinn/AWS-IoT-Neopixel-MongooseOS.git```
-- Go into the directory `mos-aws` and run `mos ui` which opens the project in UI
 
 ## Step 2: Set up Wi-Fi
 

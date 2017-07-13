@@ -1,5 +1,5 @@
 author: anelson (austin@mgenio.com)
-description: A Mongoose-OS app that allows you to control Neopixels from AWS IoT and an Android Companion App
+description: Control Neopixels from AWS IoT and an Android Companion App
 version: 1.0
 
 # Optional. List of tags for online search.

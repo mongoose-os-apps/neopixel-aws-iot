@@ -5,8 +5,9 @@ version: 1.0
 # Optional. List of tags for online search.
 tags:
   - js
-  - AWS
-  - Neopixel
+  - aws
+  - cloud
+  - neopixel
 
 # List of files / directories with C sources. No slashes at the end of dir names.
 sources:

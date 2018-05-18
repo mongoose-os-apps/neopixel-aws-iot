@@ -1,9 +1,5 @@
 package com.mgenio.aws.mongooseos.neopixels.async;
 
-/**
- * Created by Austin Nelson on 5/25/2017.
- */
-
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -11,17 +7,24 @@ import com.amazonaws.services.iotdata.AWSIotDataClient;
 import com.amazonaws.services.iotdata.model.GetThingShadowRequest;
 import com.amazonaws.services.iotdata.model.GetThingShadowResult;
 import com.amazonaws.services.iotdata.model.ResourceNotFoundException;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.PropertyAccessor;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.mgenio.aws.mongooseos.neopixels.interfaces.OnGetThingShadow;
-import com.mgenio.aws.mongooseos.neopixels.models.Thing;
-
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.mgenio.aws.mongooseos.neopixels.models.ThingData;
+import com.mgenio.aws.mongooseos.neopixels.models.json.Thing;
 
 /**
  * Created by Austin Nelson on 5/25/2017.
  */
-
 public class GetThingShadow extends AsyncTask<String, Void, String[]> {
+    private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper() // change some configuration
+            .setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.NONE) // remove visibility of all accessors
+            .setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY) // allow only fields
+            .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false) // don't fail on unknown fields
+            .enable(SerializationFeature.INDENT_OUTPUT);
 
     private AWSIotDataClient awsIotDataClient;
     private OnGetThingShadow onGetThingShadow;
@@ -31,9 +34,10 @@ public class GetThingShadow extends AsyncTask<String, Void, String[]> {
         this.onGetThingShadow = onGetThingShadow;
     }
 
-    @Override protected String[] doInBackground(String... params) {
-        GetThingShadowRequest getThingShadowRequest = new GetThingShadowRequest().withThingName(params[0]);
-        GetThingShadowResult result = null;
+    @Override
+    protected String[] doInBackground(String... params) {
+        final GetThingShadowRequest getThingShadowRequest = new GetThingShadowRequest().withThingName(params[0]);
+        final GetThingShadowResult result;
 
         try {
             result = awsIotDataClient.getThingShadow(getThingShadowRequest);
@@ -41,35 +45,33 @@ public class GetThingShadow extends AsyncTask<String, Void, String[]> {
             return null;
         }
 
-        byte[] bytes = new byte[result.getPayload().remaining()];
+        final byte[] bytes = new byte[result.getPayload().remaining()];
         result.getPayload().get(bytes);
-        String resultString = new String(bytes);
-        String[] results = new String[2];
+        final String resultString = new String(bytes);
+        final String[] results = new String[2];
         results[0] = params[0];
         results[1] = resultString;
 
         return results;
     }
 
-    @Override protected void onPostExecute(String[] results) {
-        if (null == results) {
+    @Override
+    protected void onPostExecute(String[] results) {
+        if (results == null) {
             onGetThingShadow.onGetResult(null);
             return;
         }
 
         try {
-            JSONObject object = new JSONObject(results[1]);
-            JSONObject state = object.getJSONObject("state");
-            JSONObject reported = state.getJSONObject("reported");
+            Log.i("GetShadowThing", results[1]);
+            final Thing thing = OBJECT_MAPPER.readValue(results[1], Thing.class);
+            final ThingData thingData = new ThingData();
+            thingData.setName(results[0]);
+            thingData.setThing(thing);
 
-            Thing thing = new Thing();
-            thing.setName(results[0]);
-            thing.setState(state);
-
-            onGetThingShadow.onGetResult(thing);
-
-        } catch (JSONException e) {
-            Log.e("GetThingShadow", e.toString());
+            onGetThingShadow.onGetResult(thingData);
+        } catch (Exception e) {
+            Log.e("GetThingShadow", "Failed to parse shadow thing", e);
             onGetThingShadow.onGetResult(null);
         }
     }

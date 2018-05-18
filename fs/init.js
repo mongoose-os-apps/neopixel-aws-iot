@@ -1,6 +1,6 @@
-load('api_aws.js');
 load('api_gpio.js');
 load('api_neopixel.js');
+load('api_shadow.js');
 load('api_math.js');
 
 let pin = 5, numPixels = 12, colorOrder = NeoPixel.GRB;
@@ -23,15 +23,15 @@ let state = {
 };
 
 //Upon startup, report current actual state, "reported"
-//When cloud sends us a command to update state ("desired"), do it
-AWS.Shadow.setStateHandler(function(data, event, reported, desired) {
-  if (event === AWS.Shadow.CONNECTED) {
-    AWS.Shadow.update(0, {reported: state});  // Report device state
-  } else if (event === AWS.Shadow.UPDATE_DELTA) {
+//When cloud sends us a command to update state (" "), do it
+Shadow.addHandler(function(event, obj) {
+  if (event === 'CONNECTED') {
+    Shadow.update(0, state);  // Report device state
+  } else if (event === 'UPDATE_DELTA') {
     for (let key in state) {
-      if (desired[key] !== undefined) {
+      if (obj[key] !== undefined) {
         print(key + ' has changed');
-        state[key] = desired[key]; //only update the key that has changed (aka delta)
+        state[key] = obj[key]; //only update the key that has changed (aka delta)
       }
     }
     
@@ -68,7 +68,7 @@ AWS.Shadow.setStateHandler(function(data, event, reported, desired) {
     }
     
     //update device shadow
-    AWS.Shadow.update(0, {reported: state});  // Report device state
+    Shadow.update(0, state);  // Report device state
   }
 }, null);
 

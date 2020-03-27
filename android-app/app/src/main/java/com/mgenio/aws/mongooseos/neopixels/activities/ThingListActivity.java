@@ -14,7 +14,7 @@ import android.view.WindowManager;
 import com.mgenio.aws.mongooseos.neopixels.R;
 import com.mgenio.aws.mongooseos.neopixels.adapters.ThingAdapter;
 import com.mgenio.aws.mongooseos.neopixels.interfaces.OnRecyclerViewItemClickListener;
-import com.mgenio.aws.mongooseos.neopixels.models.Thing;
+import com.mgenio.aws.mongooseos.neopixels.models.ThingData;
 
 import java.util.ArrayList;
 
@@ -24,9 +24,9 @@ import butterknife.OnClick;
 
 import static com.mgenio.aws.mongooseos.neopixels.utils.Constants.EXTRA_THING_NAME;
 
-public class ThingListActivity extends AppCompatActivity implements OnRecyclerViewItemClickListener<Thing> {
-
-    @BindView(R.id.rv_devices) RecyclerView rvDevices;
+public class ThingListActivity extends AppCompatActivity implements OnRecyclerViewItemClickListener<ThingData> {
+    @BindView(R.id.rv_devices)
+    RecyclerView rvDevices;
     private ThingAdapter thingAdapter;
 
     @Override
@@ -67,15 +67,16 @@ public class ThingListActivity extends AppCompatActivity implements OnRecyclerVi
 
     private void loadDevicesFromStringArray() {
         String[] things = getResources().getStringArray(R.array.things);
-        ArrayList<Thing> thingList = new ArrayList<>();
+        ArrayList<ThingData> thingList = new ArrayList<>();
         for (String thing : things) {
-            thingList.add(new Thing(thing));
+            thingList.add(new ThingData(thing));
         }
         thingAdapter.setModels(thingList);
     }
 
-    @Override public void onItemClick(View view, Thing model) {
-        Intent intent = new Intent(ThingListActivity.this, ThingDetailActivity.class);
+    @Override
+    public void onItemClick(View view, ThingData model) {
+        final Intent intent = new Intent(ThingListActivity.this, ThingDetailActivity.class);
         intent.putExtra(EXTRA_THING_NAME, model.getName());
         startActivity(intent);
     }

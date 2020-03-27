@@ -5,29 +5,29 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Austin Nelson on 3/23/2016.
  */
 public class PagerAdapter extends FragmentStatePagerAdapter {
-
-    private ArrayList<Fragment> fragments;
-    private ArrayList<String> titles;
+    private final List<Fragment> fragments = new ArrayList<>();
+    private final List<String> titles = new ArrayList<>();
 
     @Override
-    public float getPageWidth (int position) {
+    public float getPageWidth(int position) {
         return 0.35f;
     }
 
     public PagerAdapter(FragmentManager fm) {
         super(fm);
-        fragments = new ArrayList<>();
-        titles = new ArrayList<>();
     }
 
-    public void setFragments(ArrayList<Fragment> fragments, ArrayList<String> titles) {
-        this.fragments = fragments;
-        this.titles = titles;
+    public void setFragments(List<Fragment> fragments, ArrayList<String> titles) {
+        this.fragments.clear();
+        this.fragments.addAll(fragments);
+        this.titles.clear();
+        this.titles.addAll(titles);
         notifyDataSetChanged();
     }
 

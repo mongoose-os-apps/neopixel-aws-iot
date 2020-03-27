@@ -10,17 +10,23 @@ import android.view.View;
 public class Utils {
 
     public static boolean awsIotCredentialsCheck(View v) {
-        if (null == Constants.COGNITO_POOL_ID) {
-            Snackbar.make(v, "COGNITO_POOL_ID cannot be null", Snackbar.LENGTH_INDEFINITE).show();
+        if (isNullOrEmpty(Constants.CUSTOMER_SPECIFIC_ENDPOINT)) {
+            Snackbar.make(v, "Constants.CUSTOMER_SPECIFIC_ENDPOINT cannot be null", Snackbar.LENGTH_INDEFINITE).show();
             return false;
-        } else if (null == Constants.CUSTOMER_SPECIFIC_ENDPOINT) {
-            Snackbar.make(v, "CUSTOMER_SPECIFIC_ENDPOINT cannot be null", Snackbar.LENGTH_INDEFINITE).show();
+        } else if (isNullOrEmpty(Constants.ACCESS_KEY)) {
+            Snackbar.make(v, "Constants.ACCESS_KEY cannot be null", Snackbar.LENGTH_INDEFINITE).show();
             return false;
-        } else if (null == Constants.MY_REGION) {
-            Snackbar.make(v, "MY_REGION cannot be null", Snackbar.LENGTH_INDEFINITE).show();
+        } else if (isNullOrEmpty(Constants.SECRET_KEY)) {
+            Snackbar.make(v, "Constants.SECRET_KEY cannot be null", Snackbar.LENGTH_INDEFINITE).show();
             return false;
-        } else {
-            return true;
+        } else if (Constants.MY_REGION == null) {
+            Snackbar.make(v, "Constants.MY_REGION cannot be null", Snackbar.LENGTH_INDEFINITE).show();
+            return false;
         }
+        return true;
+    }
+
+    public static boolean isNullOrEmpty(String value) {
+        return value == null || value.trim().isEmpty();
     }
 }

@@ -2,7 +2,7 @@
     <string name="app_name">MongooseOS</string>
 
     <string-array name="things">
-        <!--<item>[Insert_Device1_Name_Here]</item>-->
+        <!--<item>[Insert_Device2_Name_Here]</item>-->
         <!--<item>[Insert_Device2_Name_Here]</item>-->
         <!--<item>[Insert_Device3_Name_Here]</item>-->
     </string-array>
